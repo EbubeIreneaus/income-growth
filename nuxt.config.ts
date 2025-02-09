@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "nuxt-aos",
     "@nuxt/image",
     "@prisma/nuxt",
+    'nuxt-nodemailer'
   ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
@@ -51,4 +52,16 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  nodemailer: {
+    from: '<service@income-growth.com>Income Growth',
+    host: 'smtp-relay.brevo.com',
+    port: 587,
+    secure:false,
+    auth: {
+      user: '852e23001@smtp-brevo.com',
+      pass:''
+    },
+  },
+
 });

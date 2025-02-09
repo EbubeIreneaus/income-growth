@@ -26,6 +26,7 @@ model User {
   account       Account?
   transactions  Transaction[]
   investments   Investment[]
+  message       Message[]
 }
 
 model Account {
@@ -43,17 +44,17 @@ model Account {
 }
 
 model Transaction {
-  id            Int      @id @default(autoincrement())
-  transactionId Int      @unique @db.Integer
-  user          User     @relation(fields: [userId], references: [id])
+  id            Int       @id @default(autoincrement())
+  transactionId Int       @unique @db.Integer
+  user          User      @relation(fields: [userId], references: [id])
   userId        Int
-  channel       String?  @db.VarChar(20) // Nullable field
-  amount        Decimal  @db.Decimal(10, 2)
-  wallet        String?  @db.VarChar(100) // Nullable field
-  type          String   @db.VarChar(10)
-  date          DateTime @default(now()) // Equivalent to auto_now_add in Django
-  status        String   @default("pending") @db.VarChar(10)
-  createdAt     DateTime @default(now())
+  channel       String?   @db.VarChar(20) // Nullable field
+  amount        Decimal   @db.Decimal(10, 2)
+  wallet        String?   @db.VarChar(100) // Nullable field
+  type          String    @db.VarChar(10)
+  date          DateTime  @default(now()) // Equivalent to auto_now_add in Django
+  status        String    @default("pending") @db.VarChar(10)
+  createdAt     DateTime  @default(now())
   approvedAt    DateTime?
 }
 
@@ -75,5 +76,15 @@ model CryptoAddress {
   id      Int    @id @default(autoincrement())
   name    String @unique @db.VarChar(30)
   address String @db.VarChar(100)
-  qrImage  String
+  qrImage String
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+  status    Int      @default(0)
 }

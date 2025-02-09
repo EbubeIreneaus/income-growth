@@ -11,8 +11,11 @@ const schema = z.object({
     .min(6, { message: "password must be than six (6) characters long" }),
   rememberme: z.boolean(),
 });
+
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
+  const {sendMail} = useNodeMailer()
   try {
     const { error, data } = await readValidatedBody(event, schema.safeParse);
     if (error) {
@@ -47,7 +50,9 @@ export default defineEventHandler(async (event) => {
         ? date.addToDate(new Date(), { day: 30 })
         : date.addToDate(new Date(), { hour: 24 }),
     });
-    return {statusCode: 200}
+
+    
+    return { statusCode: 200 };
   } catch (error: any) {
     return { statusCode: 500, statusMessage: error.message };
   }

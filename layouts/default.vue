@@ -13,6 +13,15 @@
           </q-item>
         </q-list>
       </div>
+
+      <div class="">
+        <div class="absolute bottom-0 card text-white bg-slate-950 text-center max-w-xs w-full mx-auto">
+        <div class="card-body">
+          <p>let us know what you need?</p>
+          <nuxt-link to="/contact"  class="btn btn-sm btn-blue-500  mx-auto">contact us</nuxt-link>
+        </div>
+      </div>
+      </div>
     </aside>
 
     <div class="cont navOpen">

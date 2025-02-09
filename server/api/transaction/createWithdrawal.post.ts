@@ -1,4 +1,5 @@
 import z from "zod";
+import { sendTransactionMail, sendWithdrawalRequestMail } from "~/lib/mail";
 import prisma from "~/lib/prisma";
 
 const schema = z.object({
@@ -52,7 +53,7 @@ export default defineEventHandler(async (event) => {
       return { statusCode: 400, statusMessage: "insufficent funds" };
     }
     const tid = await generateId();
-    await prisma.transaction.create({
+    const trans = await prisma.transaction.create({
       data: {
         amount: data.amount,
         userId: event.context.user.id,
@@ -61,8 +62,16 @@ export default defineEventHandler(async (event) => {
         transactionId: tid,
         type: "withdrawal",
       },
+      include: {
+        user: true
+      }
     });
 
+    try {
+        await sendWithdrawalRequestMail(trans, trans.user.email)
+    } catch (error) {
+        
+    }
     return {statusCode: 201}
   } catch (error: any) {
     return createError({statusMessage: error.message})
