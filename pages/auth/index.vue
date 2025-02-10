@@ -26,12 +26,14 @@
               class="input input-md input-bordered !bg-primary w-full mb-3"
               type="email"
               v-model="formLogin.email"
+              placeholder="email"
             />
 
             <input
               class="input input-md input-bordered !bg-primary w-full mb-3"
               type="password"
               v-model="formLogin.password"
+              placeholder="password"
             />
 
             <q-checkbox
