@@ -249,9 +249,8 @@ async function Register() {
       return router.push("/");
     }
 
-    return NotifyError(res.statusMessage, "top-right");
+    return NotifyError(res.statusMessage??res.message, "top-right");
   } catch (error: any) {
-    console.log(error);
     return NotifyError(error.statusMessage, "top-right");
   } finally {
     isRegistering.value = false;
