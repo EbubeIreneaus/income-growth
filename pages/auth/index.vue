@@ -252,7 +252,7 @@ async function Register() {
     return NotifyError(res.statusMessage, "top-right");
   } catch (error: any) {
     console.log(error);
-    return NotifyError(error.message, "top-right");
+    return NotifyError(error.statusMessage, "top-right");
   } finally {
     isRegistering.value = false;
   }
