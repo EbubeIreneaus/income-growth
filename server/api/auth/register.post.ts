@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: error.issues[0].message,
       });
     }
-    const config = useRuntimeConfig();
+    const config = useRuntimeConfig(event);
     const salt = bcrypt.genSaltSync(10);
     const psw = bcrypt.hashSync(body.password, salt);
     const user = await prisma.user.create({
