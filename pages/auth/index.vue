@@ -260,7 +260,7 @@ async function Register() {
 async function Login() {
   try {
     isLoggingin.value = true;
-    const res = await $fetch("/api/auth/login", {
+    const res = await $fetch<any>("/api/auth/login", {
       method: "POST",
       body: formLogin,
     });
@@ -268,8 +268,9 @@ async function Login() {
     if (res.statusCode === 200) {
       return router.push("/");
     }
+    NotifyError(res.statusMessage, "top-right");
   } catch (error: any) {
-    NotifyError(error.message, "top-right");
+    NotifyError(error.statusMessage, "top-right");
   } finally {
     isLoggingin.value = false;
   }

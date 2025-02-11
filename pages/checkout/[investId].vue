@@ -40,7 +40,7 @@
           <div class="max-w-sm text-subtitle1 line-clamp-1 text-ellipsis">
             {{ wallet?.address }}
           </div>
-          <button class="btn btn-sm">copy</button>
+          <button class="btn btn-sm" @click="() => useCopy(wallet?.address ?? '')">copy</button>
         </div>
 
         <div>
@@ -116,6 +116,7 @@
 </template>
 
 <script setup lang="ts">
+import { useCopy } from '~/composables/clipboard';
 import type { Investment } from "~/types/investment";
 import { plans } from "~/lib/plan";
 import Swal from "sweetalert2";
