@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
         return createError({
           statusCode: 400,
           statusMessage: "you are not authorise to perform this action",
-          message: "you are not authorise to perform this action",
+          message: "you are not authorise to perform this action "+token,
         });
       } catch (error: any) {
         return createError({
