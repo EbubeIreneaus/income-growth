@@ -325,10 +325,54 @@ export async function sendMsgRecievedMail(user: any) {
 
     `;
 
-    await sendMail({
-        subject: `Message Recieved`,
-        text: msg,
-        html: msg,
-        to: user.email,
-      });
+  await sendMail({
+    subject: `Message Recieved`,
+    text: msg,
+    html: msg,
+    to: user.email,
+  });
+}
+
+export async function sendMsgReplyMail(message: any, reply: string) {
+  const msg = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="UTF-8">
+      <title>Message Received</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+      <table width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+              <td align="center">
+                  <table width="600px" cellspacing="0" cellpadding="20" style="background: #f8f8f8; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                      <tr>
+                          <td align="center">
+                              <h2 style="color: #0073e6;">Thank You for Reaching Out!</h2>
+                              <p><strong>${reply}</strong></p>
+                            
+                              
+                              <br>
+                              <p>We appreciate your patience and look forward to assisting you.</p>
+                              <br>
+                              <p>Best regards,<br>
+                              <strong>Income Growth</strong></p>
+                              <hr style="border: 0; border-top: 1px solid #ddd;">
+                          </td>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </table>
+  </body>
+  </html>
+  
+      `;
+
+  await sendMail({
+    subject: `RE: ${message.subject}`,
+    text: msg,
+    html: msg,
+    to: message.user.email,
+  });
 }

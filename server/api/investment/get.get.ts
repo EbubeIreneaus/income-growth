@@ -12,7 +12,7 @@ export default defineEventHandler(async event => {
             }
         })
 
-        const wallets = prisma.cryptoAddress.findMany()
+        const wallets = await prisma.cryptoAddress.findMany()
 
         return {investment, wallets}
     } catch (error:any) {

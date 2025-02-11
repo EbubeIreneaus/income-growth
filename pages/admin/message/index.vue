@@ -12,7 +12,7 @@
                 <h2 class="text-lg font-semibold line-clamp-1">{{ msg.user.fullname }}</h2>
                 <p class="text-sm text-slate-300">{{ msg.user.email }}</p>
               </div>
-              <span class="text-sm">Feb 10, 2025</span>
+              <span class="text-sm">{{ date.formatDate(msg.createdAt, 'MMM DD, YYYY')}}</span>
             </div>
 
             <h3 class="text-lg my-3 font-medium text-slate-200">
@@ -23,8 +23,8 @@
             </p>
 
             <div class="mt-4 flex justify-end space-x-2">
-              <nuxt-link to="/" class="btn btn-primary btn-sm">Reply</nuxt-link>
-              <button class="btn btn-error btn-sm">Delete</button>
+              <nuxt-link :to="`/admin/message/${msg.id}/reply`" class="btn btn-primary btn-sm">Reply</nuxt-link>
+            
             </div>
           </div>
         </div>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import {date} from 'quasar'
 definePageMeta({
     layout: 'admin',
     middleware: ['admin-auths']

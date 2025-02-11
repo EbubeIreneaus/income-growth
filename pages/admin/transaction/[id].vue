@@ -47,11 +47,11 @@
         </div>
         <div class="flex justify-between">
           <span class="text-gray-500">Date:</span>
-          <span class="font-semibold">2025-02-10</span>
+          <span class="font-semibold">{{ date.formatDate(data.createdAt, 'MMM DD, YYYY')}}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-gray-500">Approve Date:</span>
-          <span class="font-semibold">2025-02-10</span>
+          <span class="font-semibold">{{ date.formatDate(data.approvedAt, 'MMM DD, YYYY')?? 'nill'}}</span>
         </div>
       </div>
 
@@ -85,6 +85,7 @@
 
 <script setup lang="ts">
 import { NotifyError, NotifyToastSuccess } from "~/lib/notify";
+import {date} from 'quasar'
 const $q = useQuasar();
 definePageMeta({
   layout: "admin",
@@ -142,7 +143,7 @@ async function del() {
         return NotifyToastSuccess("Deleted Sucessfully");
       }
     } catch (error: any) {
-      return NotifyError(error.message);
+      return NotifyError(error.statusMessage);
     }
   });
 }

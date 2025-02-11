@@ -70,6 +70,11 @@ const navLink = [
     link: "/admin/user",
   },
   {
+    title: "Setting",
+    icon: "settings",
+    link: "/admin/setting",
+  },
+  {
     title: "Logout",
     icon: "logout",
     link: "/admin/auth/logout",

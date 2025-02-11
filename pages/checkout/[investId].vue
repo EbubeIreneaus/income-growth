@@ -34,13 +34,19 @@
             :src="wallet?.qrImage"
             height="300px"
             width="350px"
-            class="max-w-sm w-full min-h-[300px] rounded-lg mb-4"
+            class="max-w-sm w-full min-h-[300px] rounded-lg mb-4 border-0"
             loading="lazy"
+            alt="scan QRCode for wallet address"
           />
           <div class="max-w-sm text-subtitle1 line-clamp-1 text-ellipsis">
             {{ wallet?.address }}
           </div>
-          <button class="btn btn-sm" @click="() => useCopy(wallet?.address ?? '')">copy</button>
+          <button
+            class="btn btn-sm"
+            @click="() => useCopy(wallet?.address ?? '')"
+          >
+            copy
+          </button>
         </div>
 
         <div>
@@ -116,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCopy } from '~/composables/clipboard';
+import { useCopy } from "~/composables/clipboard";
 import type { Investment } from "~/types/investment";
 import { plans } from "~/lib/plan";
 import Swal from "sweetalert2";
@@ -135,29 +141,26 @@ const Toast = Swal.mixin({
   },
 });
 
-const wallets = [
-  {
-    name: "btc",
-    address: "1J7mdg5rbQyUHENYdx39WVWK7fsLpEoXZy",
-    qrImage: "https://placehold.co/600x400@2x.png",
-  },
-];
+const wallets = ref<any>([]);
 
-const paymentMethod = ref("btc");
+const paymentMethod = ref(null);
 const wallet = computed(() => {
-  return wallets.find((w) => (w.name = paymentMethod.value));
+  return wallets.value.find((pr: any) => pr.name == paymentMethod.value);
 });
-const { data, error } = await useFetch<{ investment: Investment }>(
-  "/api/investment/get?investId=" + route.params.investId,
-  {
-    headers: {
-      Authorization: `Bearer ${useCookie("Authorization").value}`,
-    },
-  }
-);
+
+const { data, error } = await useFetch<{
+  investment: Investment;
+  wallets: any;
+}>("/api/investment/get?investId=" + route.params.investId, {
+  headers: {
+    Authorization: `Bearer ${useCookie("Authorization").value}`,
+  },
+});
 
 if (data.value) {
   investment.value = data.value.investment;
+  wallets.value = data.value.wallets;
+  paymentMethod.value = wallets.value[0].name;
 }
 
 const plan = computed(() => {
@@ -180,15 +183,16 @@ function paymentMade() {
   Toast.fire({
     icon: "info",
     title: "Payment is Processing",
-    padding: '10px'
-  })
-  setTimeout(()=>{
-    useRouter().push('/')
-  }, 3000)
+    padding: "10px",
+  });
+  setTimeout(() => {
+    useRouter().push("/");
+  }, 3000);
 }
-onMounted(() => {
-  console.log(data.value);
-});
+
+// onMounted(() => {
+//   console.log(data.value);
+// });
 </script>
 
 <style scoped></style>

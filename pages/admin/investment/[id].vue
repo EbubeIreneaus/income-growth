@@ -45,11 +45,11 @@
         </div>
         <div class="flex justify-between">
           <span class="text-gray-500">Date:</span>
-          <span class="font-semibold">2025-02-10</span>
+          <span class="font-semibold">{{ date.formatDate(data.createdAt, 'MMM DD, YYYY')}}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-500">Approve Date:</span>
-          <span class="font-semibold">2025-02-10</span>
+          <span class="text-gray-500">Start Date:</span>
+          <span class="font-semibold">{{ date.formatDate(data.start_date, 'MMM DD, YYYY') ?? 'nill'}}</span>
         </div>
       </div>
 
@@ -99,6 +99,8 @@
 <script setup lang="ts">
 import { NotifyError, NotifyToastSuccess } from "~/lib/notify";
 import { plans } from "~/lib/plan";
+import {date} from 'quasar'
+
 definePageMeta({
   layout: "admin",
   middleware: ["admin-auths"],
