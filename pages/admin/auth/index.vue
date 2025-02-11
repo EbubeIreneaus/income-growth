@@ -64,7 +64,7 @@ async function login() {
     }
 
   } catch (error: any) {
-    return NotifyError(error.statusMessage);
+    return NotifyError(error.statusMessage ?? error.message);
   } finally {
     isLoading.value = false;
   }

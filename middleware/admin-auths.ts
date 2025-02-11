@@ -3,7 +3,6 @@ import prisma from "~/lib/prisma";
 import type { User } from "~/types/user";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    console.log('hello ', to.path);
     
   if (to.path.includes("/auth/")) {
     return;
@@ -20,7 +19,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         Authorization: `Bearer ${useCookie('Authorization').value}`
       }
     })
-    console.log(user);
     
     if (user && user.admin) {
       return

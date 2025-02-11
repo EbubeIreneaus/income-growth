@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     });
     
     if (!user || !user.admin) {
-      return createError({ statusCode: 404, statusMessage: "user not found " });
+      return createError({ statusCode: 404, statusMessage: "user not found" });
     }
 
     const isValidPsw = bcrypt.compareSync(data.password, user.password);
