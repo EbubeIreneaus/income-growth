@@ -25,9 +25,7 @@
                 <q-avatar size="72px">
                   <nuxt-img src="/img/admin-user.jpg" sizes="72px" format="webp" densities="x1" loading="lazy" alt="Profile placeholder image" />
                 </q-avatar>
-
-                <div class="text-subtitle1 q-mt-md q-mb-xs">okigwe ebeube ireneaus</div>
-
+                <br />
                 <q-btn
                   color="primary"
                   label="Logout"
