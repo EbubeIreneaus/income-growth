@@ -106,7 +106,7 @@ function validateInput(val: number) {
                     </div>
                   </div>
                   <div class="font-mono text-base">
-                    +{{ plan.roi }} every {{ plan.duration }}
+                    +{{ plan.roi }}% every {{ plan.duration }}
                   </div>
                 </div>
               </label>
