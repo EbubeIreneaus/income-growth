@@ -26,7 +26,7 @@
 
     <div class="cont navOpen">
       <MainHeaderComp @togle-nav="toggleNav" />
-     <main class="bg-black text-slate-50 min-h-screen p-5">
+     <main class="bg-black text-slate-50 min-h-screen p-5 pb-20">
       <slot></slot>
      </main>
     </div>
