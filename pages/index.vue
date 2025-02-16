@@ -53,6 +53,43 @@
           </div>
         </div>
       </div>
+        <!-- Total withdrawal card -->
+        <div class="card bg-primary">
+        <div class="card-body">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="text-h5" v-money="info?.user.account.last_withdrawal"></div>
+              <div>Last Withdrawal</div>
+            </div>
+            <q-icon name="fa fa-coins" size="lg" color="secondary"></q-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-primary">
+        <div class="card-body">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="text-h5" v-money="info?.user.account.pending_withdrawal"></div>
+              <div>Pending Withdrawal</div>
+            </div>
+            <q-icon name="money" size="lg" color="secondary"></q-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-primary">
+        <div class="card-body">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="text-h5" v-money="info?.user.account.affliate_commision"></div>
+              <div>Referral Commision</div>
+            </div>
+            <q-icon name="fa fa-sack-dollar" size="lg" color="secondary"></q-icon>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class=" mb-10">

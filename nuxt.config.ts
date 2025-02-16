@@ -13,6 +13,17 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     layoutTransition: { name: "layout", mode: "out-in" },
+    head: {
+      script: [
+        {
+          src: '/main.js',
+        },
+        {
+          src: 'https://cdn.gtranslate.net/widgets/latest/float.js',
+          defer: true
+        },
+      ]
+    }
   },
 
   css: ["~/assets/css/style.css"],

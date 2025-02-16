@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
         referred_id: body.referred_id ?? null,
         account: {
           create: {
-            balance: 5.0,
+            balance: 0.0,
           },
         },
       },

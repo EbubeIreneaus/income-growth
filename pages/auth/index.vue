@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main >
     <div class="bg-primary">
       <div class="tw-py-4 tw-px-5 tw-flex tw-items-center">
         <q-btn
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-      class="q-py-md-sm q-py-lg q-px-md-xl bg-primary row items-center"
+      class="q-py-md-sm q-py-lg q-px-md-xl bg-primary py-20 row items-center"
       style="min-height: 100dvh"
     >
       <div

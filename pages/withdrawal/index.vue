@@ -2,6 +2,7 @@
 import { NotifyError, NotifyToastSuccess } from "~/lib/notify";
 import type { User } from "~/types/user";
 const router = useRouter();
+const isLoading = ref(false)
 
 const { data: info, error } = await useFetch<{
   statusCode: number;
@@ -37,6 +38,7 @@ async function saveOrder() {
   }
 
   try {
+    isLoading.value = true
     const res = await $fetch<any>("/api/transaction/createWithdrawal", {
       method: "post",
       body: withdrawForm,
@@ -51,6 +53,8 @@ async function saveOrder() {
     NotifyError(res.statusMessage);
   } catch (error: any) {
     NotifyError(error.statusMessage);
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -104,7 +108,7 @@ async function saveOrder() {
               </p>
             </div>
           </div>
-          <q-btn class="block btn btn-md btn-primary" @click="saveOrder()"
+          <q-btn class="block btn btn-md btn-primary" @click="saveOrder()" :loading="isLoading"
             >Initiate Withdraw</q-btn
           >
         </q-form>

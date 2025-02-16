@@ -1,3 +1,4 @@
+import { nuxtCtx } from "nuxt/kit";
 import z from "zod";
 import { sendTransactionMail, sendWithdrawalRequestMail } from "~/lib/mail";
 import prisma from "~/lib/prisma";
@@ -40,40 +41,79 @@ export default defineEventHandler(async (event) => {
         statusMessage: error.issues[0].message,
       });
     }
-    const user = await prisma.user.findFirst({
-      where: {
-        id: event.context.user.id,
-      },
-      include: {
-        account: true,
-      },
-    });
 
-    if (Number(user?.account?.balance) < data.amount) {
-      return { statusCode: 400, statusMessage: "insufficent funds" };
-    }
     const tid = await generateId();
-    const trans = await prisma.transaction.create({
-      data: {
-        amount: data.amount,
-        userId: event.context.user.id,
-        channel: data.channel,
-        wallet: data.wallet,
-        transactionId: tid,
-        type: "withdrawal",
-      },
-      include: {
-        user: true
+
+    const t = await prisma.$transaction(async (ctx) => {
+      const user = await prisma.user.findFirst({
+        where: {
+          id: event.context.user.id,
+        },
+        include: {
+          account: true,
+        },
+      });
+
+      if (!user || !user.account) {
+        return createError({
+          statusCode: 500,
+          statusMessage: "user or account not found",
+        });
       }
+
+      if (Number(user?.account?.balance) < data.amount) {
+        return createError({
+          statusCode: 400,
+          statusMessage: "Insufficient funds",
+        });
+      }
+
+      const transaction = await ctx.transaction.create({
+        data: {
+          transactionId: tid,
+          amount: data.amount,
+          type: "withdrawal",
+          channel: data.channel,
+          wallet: data.wallet,
+          userId: event.context.user.id,
+          status: "pending",
+        },
+
+        include: {
+          user: {
+            select: {
+              fullname: true,
+              email: true,
+            },
+          },
+        },
+      });
+
+      await ctx.user.update({
+        where: {
+          id: event.context.user.id,
+        },
+        data: {
+          account: {
+            update: {
+              pending_withdrawal:Number(user.account.pending_withdrawal) + data.amount,
+              balance: Number(user.account.balance) - data.amount,
+            },
+          },
+        },
+      });
+
+      return {...transaction};
     });
 
-    try {
-        await sendWithdrawalRequestMail(trans, trans.user.email)
-    } catch (error) {
-        
+    if (!(t instanceof Error) && t.user) {
+      try {
+        await sendWithdrawalRequestMail(t, t.user.email);
+      } catch (error:any) {
+      }
     }
-    return {statusCode: 201}
+    return { statusCode: 201 };
   } catch (error: any) {
-    return createError({statusMessage: error.message})
+    return createError({ statusMessage: error.message });
   }
 });

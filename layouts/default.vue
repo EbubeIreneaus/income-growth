@@ -14,7 +14,7 @@
         </q-list>
       </div>
 
-      <div class="">
+      <div class="mb-20">
         <div class="absolute bottom-0 card text-white bg-slate-950 text-center max-w-xs w-full mx-auto">
         <div class="card-body">
           <p>let us know what you need?</p>
@@ -114,6 +114,7 @@ aside {
   max-width: 0;
   overflow: hidden;
   transition: all 0.1s linear;
+  overflow: auto;
 }
 aside.open {
   max-width: 250px;

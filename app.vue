@@ -1,8 +1,31 @@
 <script setup lang="ts">
+interface CustomWindow extends Window {
+  gtranslateSettings?: {
+    default_language: string;
+    languages: string[];
+    wrapper_selector: string;
+    flag_style: string;
+  };
+}
+
+declare let window: CustomWindow;
+
 onMounted(() => {
   const loader = document.getElementById("loader");
   loader?.classList.add("fade-out");
-});
+
+  window.gtranslateSettings = {
+    default_language: "en",
+    languages: ["en", "fr", "it", "es", "ru", "de", "tr", "sw", "sv"],
+    wrapper_selector: ".gtranslate_wrapper",
+    flag_style: "3d"
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://cdn.gtranslate.net/widgets/latest/float.js";
+  script.defer = true;
+  document.body.appendChild(script);
+})
 </script>
 
 <template>
@@ -11,6 +34,8 @@ onMounted(() => {
       <NuxtLoadingIndicator />
       <NuxtPage />
     </NuxtLayout>
+
+    <div class="gtranslate_wrapper"></div>
 
     <div class="loader" id="loader">
       <div class="spinner"></div>

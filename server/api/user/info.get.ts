@@ -8,6 +8,11 @@ export default defineEventHandler(async (event) => {
     
     const U = jwt.verify(token, config.jwt_secret) as JwtPayload as any;
 
+    // xxxxxxx fetch and update all transaction xxxxxx
+    
+
+    // 
+
     const user = await prisma.user.findUnique({
       where: {
         id: U.id,

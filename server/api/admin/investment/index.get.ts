@@ -6,6 +6,7 @@ export default defineEventHandler(async event => {
             select: {
                 investmentId: true,
                 amount: true,
+                active: true,
                 user: {
                     select: {
                         id: true

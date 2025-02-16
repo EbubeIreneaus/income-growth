@@ -5,8 +5,7 @@ import { date } from "quasar";
 
 export default defineEventHandler(async (event) => {
   const id = getQuery(event).tid as string;
-  console.log(id);
-  
+
   try {
     const ive = await prisma.investment.findUnique({
       where: {
@@ -17,6 +16,16 @@ export default defineEventHandler(async (event) => {
         start_date: true,
         active: true,
         plan: true,
+        amount: true,
+        user: {
+          select: {
+            account: {
+              select:{
+                active_investment: true
+              }
+            }
+          }
+        }
       },
     });
 
@@ -27,10 +36,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    console.log("ive ",ive);
-
     const plan = plans.find((pl) => pl.value.toLowerCase().trim() == ive?.plan.toLowerCase().trim());
-
+    
     if (!plan) {
       return createError({
         statusCode: 400,
@@ -45,15 +52,27 @@ export default defineEventHandler(async (event) => {
       data: {
         active: true,
         start_date: new Date(),
-        next_due_date: date.addToDate(new Date(), {hours: plan.duration})
-      },
-
+        next_due_date: date.addToDate(new Date(), {hours: plan.duration}),
+        user: {
+          update: {
+            account: {
+              update: {
+                active_investment: Number(ive?.user.account?.active_investment) + Number(ive?.amount)
+            }
+          }
+        }
+      }
+    },
       include: {
         user: true,
       },
     });
 
-    await sendInvestmentMail(iv, iv.user.email);
+    try {
+      await sendInvestmentMail(iv, iv.user.email);
+    } catch (error) {
+      
+    }
     return { statusCode: 200, data: iv };
   } catch (error: any) {
     return createError({

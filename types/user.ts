@@ -7,6 +7,7 @@ type Account = {
   pending_withdrawal: number;
   last_deposit: number;
   total_earnings: number;
+  last_withdrawal: number;
   affliate_commision: number;
 };
 

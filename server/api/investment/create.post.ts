@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
         plan: data.plan,
         amount: data.amount,
         investmentId: investId,
+        active: false
       },
     });
 
