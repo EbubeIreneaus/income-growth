@@ -1,4 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { sumAndEvaluateInvestment } from "~/lib/cached/XY";
 import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
@@ -9,8 +10,11 @@ export default defineEventHandler(async (event) => {
     const U = jwt.verify(token, config.jwt_secret) as JwtPayload as any;
 
     // xxxxxxx fetch and update all transaction xxxxxx
-    
-
+      try {
+        await sumAndEvaluateInvestment()
+      } catch (error) {
+        
+      }
     // 
 
     const user = await prisma.user.findUnique({

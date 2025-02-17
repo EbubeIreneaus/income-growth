@@ -3,6 +3,7 @@ import z from "zod";
 import { plans } from "~/lib/plan";
 import { date } from "quasar";
 import prisma from "~/lib/prisma";
+import { sendInvestmentRequestMail } from "~/lib/mail";
 
 const schema = z.object({
   amount: z.coerce.number().min(1, "Please enter amount to invest"),
@@ -54,7 +55,21 @@ export default defineEventHandler(async (event) => {
         investmentId: investId,
         active: false
       },
+      include: {
+        user: {
+          select: {
+            fullname: true,
+            email: true
+          }
+        }
+      }
     });
+
+    try {
+      await sendInvestmentRequestMail(Iv, Iv.user.email)
+    } catch (error) {
+      
+    }
 
     return { statusCode: 201, investmentId: Iv.id };
   } catch (error: any) {

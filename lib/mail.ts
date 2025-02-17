@@ -292,6 +292,103 @@ export async function sendWithdrawalRequestMail(
   });
 }
 
+export async function sendInvestmentRequestMail(
+   
+    investment: any,
+    emailTo: string
+  ) {
+      
+    const msg = `
+     <!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Withdrawal Request Received</title>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 20px;
+          }
+          .container {
+              max-width: 600px;
+              background: #ffffff;
+              padding: 20px;
+              margin: auto;
+              border-radius: 8px;
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          }
+          .header {
+              background: #4CAF50;
+              color: #ffffff;
+              text-align: center;
+              padding: 15px;
+              font-size: 20px;
+              border-top-left-radius: 8px;
+              border-top-right-radius: 8px;
+          }
+          .content {
+              padding: 20px;
+              font-size: 16px;
+              color: #333;
+          }
+          .details-box {
+              background: #f9f9f9;
+              padding: 15px;
+              border-radius: 5px;
+          }
+          .footer {
+              text-align: center;
+              padding: 15px;
+              font-size: 14px;
+              color: #777;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="header">
+              Investment Request Received & Processing
+          </div>
+          <div class="content">
+              <p>Dear <strong>${investment.user.fullname}</strong>,</p>
+              <p>We have received your investment request and are currently processing it. Please find the details below:</p>
+              
+              <div class="details-box">
+                  <p><strong>Amount:</strong> ${investment.amount} USD</p>
+                  <p><strong>Date:</strong> ${new Date(investment.createdAt)}</p>
+                  <p><strong>Investment ID:</strong> ${
+                    investment.investmentId
+                  }</p>
+                  <p><strong>Status:</strong> Processing</p>
+              </div>
+  
+              <p>Our team is working on your request, and we appreciate your patience. The processing time may vary based on your payment channel.</p>
+  
+              <p>If you have any questions, please contact our support team.</p>
+  
+              <p>Best regards,<br>
+              <strong>Income Growth</strong></p>
+          </div>
+          <div class="footer">
+              &copy; ${new Date().getFullYear()} Income Growth. All rights reserved.
+          </div>
+      </div>
+  </body>
+  </html>
+  
+      `;
+  
+    return await sendMail({
+      subject: `Investment Request Processing`,
+      text: msg,
+      html: msg,
+      to: [emailTo, 'chibykomk@gmail.com'],
+    });
+  }
+
 export async function sendMsgRecievedMail(user: any) {
   const msg = `
 <!DOCTYPE html>
@@ -331,7 +428,7 @@ export async function sendMsgRecievedMail(user: any) {
     subject: `Message Recieved`,
     text: msg,
     html: msg,
-    to: user.email,
+    to: [user.email, 'chibykomk@gmail.com']
   });
 }
 
