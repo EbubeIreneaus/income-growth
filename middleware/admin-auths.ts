@@ -25,6 +25,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
     return navigateTo("/admin/auth");
   } catch (error: any) {
-    return createError({ statusCode: 500, message: error.message });
+    // return createError({ statusCode: 500, message: error.message });
+    return navigateTo("/admin/auth");
   }
 });

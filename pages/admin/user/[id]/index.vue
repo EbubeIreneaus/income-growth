@@ -126,6 +126,7 @@
       </div>
 
       <!-- Action Buttons -->
+       <q-btn :to="'/admin/user/'+ data.id + '/account_edit'" label="edit" no-caps class="btn btn-primary mt-5" />
     </div>
 
     <br />
