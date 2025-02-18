@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     // xxxxxxx fetch and update all transaction xxxxxx
       try {
-        await sumAndEvaluateInvestment()
+        await sumAndEvaluateInvestment(event)
       } catch (error) {
         
       }
