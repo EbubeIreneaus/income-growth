@@ -91,12 +91,12 @@ onMounted(() => {
 }
 .page-enter-from,
 .layout-enter-from {
-  transform: translateX(100%);
-  opacity: 0;
+  /* transform: translateX(100%);
+  opacity: 0; */
 }
 .page-leave-to,
 .layout-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
+  /* transform: translateX(-100%);
+  opacity: 0; */
 }
 </style>
