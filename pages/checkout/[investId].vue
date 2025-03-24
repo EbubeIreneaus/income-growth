@@ -30,7 +30,7 @@
         </div>
 
         <div class="mb-5">
-          <nuxt-img
+          <img
             :src="wallet?.qrImage"
             height="300px"
             width="350px"
@@ -67,7 +67,7 @@
             <q-item>
               <q-item-section class="text-subtitle1">Returns</q-item-section>
               <q-item-section class="text-subtitle2"
-                ><div v-money="investment?.amount * (plan.roi / 100)"></div
+                ><div v-money="investment?.amount || 0 * (plan.roi / 100)"></div
               ></q-item-section>
             </q-item>
             <q-item>
