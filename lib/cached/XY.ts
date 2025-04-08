@@ -55,7 +55,7 @@ export const sumAndEvaluateInvestment = defineCachedFunction(
             },
           });
 
-          next_new_date = date.addToDate(new Date(), {
+          next_new_date = date.addToDate(next_new_date, {
             hours: plan?.duration,
           });
 
@@ -67,6 +67,6 @@ export const sumAndEvaluateInvestment = defineCachedFunction(
     return;
   },
   {
-    maxAge: 60 * 60, // 1 hour
+    maxAge: 1, // 1 hour
   }
 );
