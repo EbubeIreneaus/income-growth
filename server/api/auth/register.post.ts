@@ -9,7 +9,7 @@ const schema = z.object({
     .min(2, { message: "firstname and lastname cannot be empty" }),
   email: z.string().email({ message: "email address is invalid" }),
   country: z.string().min(2, { message: "Please select a valid country" }),
-  phone: z.string().min(10, { message: "enter a valid phone number" }),
+  phone: z.string().min(7, { message: "enter a valid phone number" }),
   referred_id: z.coerce.number().int().nullable(),
   password: z
     .string()
