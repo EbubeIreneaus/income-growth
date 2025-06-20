@@ -59,7 +59,7 @@ export async function sendTransactionMail(transaction: any, emailTo: string) {
         </div>
         <div class="content">
             <p>Dear <strong>${transaction.user.fullname}</strong>,</p>
-            <p>We are pleased to inform you that your transaction has been successfully processed. Below are the details:</p>
+            <p>We are pleased to inform you that your ${transaction?.type == "withdrawal" ? 'withdrawal request' : 'transaction'} has been successfully approved. Below are the details:</p>
             
             <div class="transaction-details">
                 <p><strong>Transaction ID:</strong> ${
