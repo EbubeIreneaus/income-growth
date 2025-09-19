@@ -129,8 +129,9 @@ export default defineEventHandler(async (event) => {
         subject: `Welcome Onboard`,
         text: welcomeMsg,
         html: welcomeMsg,
-        to: [user.email, 'chibykomk@gmail.com'],
+        to: [user.email],
       });
+      
     } catch (error) {}
 
     return { statusCode: 201 };

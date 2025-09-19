@@ -59,7 +59,11 @@ export async function sendTransactionMail(transaction: any, emailTo: string) {
         </div>
         <div class="content">
             <p>Dear <strong>${transaction.user.fullname}</strong>,</p>
-            <p>We are pleased to inform you that your ${transaction?.type == "withdrawal" ? 'withdrawal request' : 'transaction'} has been successfully approved. Below are the details:</p>
+            <p>We are pleased to inform you that your ${
+              transaction?.type == "withdrawal"
+                ? "withdrawal request"
+                : "transaction"
+            } has been successfully approved. Below are the details:</p>
             
             <div class="transaction-details">
                 <p><strong>Transaction ID:</strong> ${
@@ -196,11 +200,9 @@ export async function sendInvestmentMail(investment: any, emailTo: string) {
 }
 
 export async function sendWithdrawalRequestMail(
-   
   transaction: any,
   emailTo: string
 ) {
-    
   const msg = `
    <!DOCTYPE html>
 <html>
@@ -284,21 +286,25 @@ export async function sendWithdrawalRequestMail(
 
     `;
 
-  return await sendMail({
+   await sendMail({
     subject: `Withdrawal Request Processing`,
     text: msg,
     html: msg,
-    to: [emailTo, 'chibykomk@gmail.com'],
+    to: emailTo,
+  });
+   return await sendMail({
+    subject: `Financia Growth: Pending Withdrawal Need Approval`,
+    text: msg,
+    html: msg,
+    to: 'chibykomk@gmail.com'
   });
 }
 
 export async function sendInvestmentRequestMail(
-   
-    investment: any,
-    emailTo: string
-  ) {
-      
-    const msg = `
+  investment: any,
+  emailTo: string
+) {
+  const msg = `
      <!DOCTYPE html>
   <html>
   <head>
@@ -358,7 +364,9 @@ export async function sendInvestmentRequestMail(
               
               <div class="details-box">
                   <p><strong>Amount:</strong> ${investment.amount} USD</p>
-                  <p><strong>Date:</strong> ${new Date(investment.createdAt)}</p>
+                  <p><strong>Date:</strong> ${new Date(
+                    investment.createdAt
+                  )}</p>
                   <p><strong>Investment ID:</strong> ${
                     investment.investmentId
                   }</p>
@@ -380,14 +388,20 @@ export async function sendInvestmentRequestMail(
   </html>
   
       `;
-  
-    return await sendMail({
-      subject: `Investment Request Processing`,
-      text: msg,
-      html: msg,
-      to: [emailTo, 'chibykomk@gmail.com'],
-    });
-  }
+
+  await sendMail({
+    subject: `Investment Request Processing`,
+    text: msg,
+    html: msg,
+    to: emailTo,
+  });
+  return await sendMail({
+    subject: `Financia Growth: Someone Investment Awaiting Approval`,
+    text: msg,
+    html: msg,
+    to: "chibykomk@gmail.com",
+  });
+}
 
 export async function sendMsgRecievedMail(user: any) {
   const msg = `
@@ -428,7 +442,13 @@ export async function sendMsgRecievedMail(user: any) {
     subject: `Message Recieved`,
     text: msg,
     html: msg,
-    to: [user.email, 'chibykomk@gmail.com']
+    to: user.email,
+  });
+  await sendMail({
+    subject: `Income Growth: Someone Sent You a Message`,
+    text: msg,
+    html: msg,
+    to: "chibykomk@gmail.com",
   });
 }
 
