@@ -293,7 +293,7 @@ export async function sendWithdrawalRequestMail(
     to: emailTo,
   });
    return await sendMail({
-    subject: `Financia Growth: Pending Withdrawal Need Approval`,
+    subject: `Income Growth: Pending Withdrawal Need Approval`,
     text: msg,
     html: msg,
     to: 'chibykomk@gmail.com'
