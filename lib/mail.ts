@@ -291,13 +291,9 @@ export async function sendWithdrawalRequestMail(
     text: msg,
     html: msg,
     to: emailTo,
+    bcc: ['chibykomk@gmail.com']
   });
-   return await sendMail({
-    subject: `Income Growth: Pending Withdrawal Need Approval`,
-    text: msg,
-    html: msg,
-    to: 'chibykomk@gmail.com'
-  });
+
 }
 
 export async function sendInvestmentRequestMail(
