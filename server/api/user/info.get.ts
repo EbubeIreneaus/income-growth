@@ -21,9 +21,6 @@ export default defineEventHandler(async (event) => {
       where: {
         id: U.id,
       },
-      omit: {
-        password: true,
-      },
       include: {
         account: true,
         transactions: true,
@@ -31,6 +28,10 @@ export default defineEventHandler(async (event) => {
         referredBy: true
       }
     });
+
+    if (user?.password) {
+      (user as any).password = undefined;
+    }
 
     return { statusCode: 200, user };
   } catch (error) {
