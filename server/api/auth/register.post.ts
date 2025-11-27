@@ -43,11 +43,12 @@ export default defineEventHandler(async (event) => {
           },
         },
       },
-      omit: {
-        password: true,
-        referred_id: true,
-      },
+      
     });
+
+      if (user?.password) {
+      (user as any).password = undefined;
+    }
 
     const token = jwt.sign(user, config.jwt_secret, { expiresIn: "24h" });
     // send verification code
