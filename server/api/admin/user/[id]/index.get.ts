@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const id = getRouterParam(event, "id") as string;
     console.log("id",id)
+    
     const user = await prisma.user.findFirst({
       where: {
        OR: [
@@ -17,10 +18,11 @@ export default defineEventHandler(async (event) => {
         referrals: true,
         account: true
       },
-      omit: {
-        password: true
-      }
     });
+
+    if (user?.password) {
+      (user as any).password = undefined;
+    }
 
     return user;
   } catch (error: any) {
