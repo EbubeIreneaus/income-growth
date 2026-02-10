@@ -16,11 +16,12 @@ export default defineEventHandler(async (event) => {
         investments: true,
         referrals: true,
         account: true,
-      },
-      omit: {
-        password: true,
-      },
+      }
     });
+
+    if (user?.password) {
+      (user as any).password = undefined;
+    }
 
     return {statusCode: 200, data: user }
   } catch (error: any) {
