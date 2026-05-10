@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     }
     const id = getRouterParam(event, "id") as string;
     // continue here
-    const account = await prisma.account.updateManyAndReturn({
+    await prisma.account.updateMany({
       where: {
         OR: [
           { user: { email: id } },
@@ -29,6 +29,15 @@ export default defineEventHandler(async (event) => {
         ],
       },
       data: data,
+    });
+
+    const account = await prisma.account.findMany({
+      where: {
+        OR: [
+          { user: { email: id } },
+          { userId: isNaN(parseInt(id)) ? 0 : parseInt(id) },
+        ],
+      },
       include: {
         user: {
           select: {
